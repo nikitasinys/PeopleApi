@@ -1,0 +1,16 @@
+insert into students (name, surname) values ('Ангеліна', 'Дрозд');
+insert into students (name, surname) values ('Аліна', 'Чебан');
+insert into students (name, surname) values ('Анастасія', 'Ігнатьєва');
+insert into students (name, surname) values ('Артем', 'Ондюк');
+insert into students (name, surname) values ('Андрій', 'Шульга');
+insert into students (name, surname) values ('Катерина', 'Бамбеєва');
+insert into students (name, surname) values ('Максим', 'Гостренко');
+insert into students (name, surname) values ('Ольга', 'Коваль');
+insert into students (name, surname) values ('Олексій', 'Руткас');
+insert into students (name, surname) values ('Поліна', 'Ковальчук');
+insert into students (name, surname) values ('Софія', 'Гуртова');
+insert into students (name, surname) values ('Владислав', 'Лоїк');
+insert into students (name, surname) values ('Віталій', 'Лозовенко');
+insert into students (name, surname) values ('Ярослав', 'Ющенко');
+insert into students (name, surname) values ('Єлизавета', 'Бурядник');
+insert into students (name, surname) values ('Михайло', 'Євтушенко');

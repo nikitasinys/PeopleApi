@@ -1,0 +1,1 @@
+update subjects set title='Comp graphic' where id=5;
