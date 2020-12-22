@@ -44,7 +44,7 @@ public class AuthFilter implements Filter {
         } else {
             role = Role.DEFAULT;
         }
-        moveToPage(req, res, role);
+//        moveToPage(req, res, role);
     }
 
     private void moveToPage(final HttpServletRequest req,

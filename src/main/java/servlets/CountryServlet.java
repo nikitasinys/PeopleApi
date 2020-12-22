@@ -3,22 +3,13 @@ package servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.CountryDao;
 import dao.CountryDaoImpl;
-import dao.SubjectDao;
-import dao.SubjectDaoImpl;
 import model.Country;
-import model.Person;
-import model.Region;
-import model.Subject;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class CountryServlet extends HttpServlet {
 
