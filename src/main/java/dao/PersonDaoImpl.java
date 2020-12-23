@@ -14,21 +14,24 @@ public class PersonDaoImpl implements PersonDao {
     //@Override
     public static Person parseResult(ResultSet resultSet) throws SQLException {
         Person person = new Person();
-
-        person.setId(resultSet.getInt("Id_person"));
-        person.setSurname(resultSet.getString("Surname"));
-        person.setName(resultSet.getString("Name"));
-        person.setPatronymic(resultSet.getString("Patronymic"));
-        person.setIdCountryBirth(resultSet.getInt("Id_country_birth"));
-        person.setIdRegionBirth(resultSet.getInt("Id_region_birth"));
-        person.setIdTownBirth(resultSet.getInt("Id_town_birth"));
-        person.setGender(resultSet.getString("Gender").charAt(0));
-        person.setDateBirth(resultSet.getDate("Date_birth"));
-        person.setDateDeath(resultSet.getDate("Date_death"));
-        person.setCountryBirth(CountryDaoImpl.parseResult(resultSet));
-        person.setRegionBirth(RegionDaoImpl.parseResult(resultSet));
-        person.setTownBirth(TownDaoImpl.parseResult(resultSet));
-
+        try {
+            person.setId(resultSet.getInt("Id_person"));
+            person.setSurname(resultSet.getString("Surname"));
+            person.setName(resultSet.getString("Name"));
+            person.setPatronymic(resultSet.getString("Patronymic"));
+            person.setIdCountryBirth(resultSet.getInt("Id_country_birth"));
+            person.setIdRegionBirth(resultSet.getInt("Id_region_birth"));
+            person.setIdTownBirth(resultSet.getInt("Id_town_birth"));
+            person.setGender(resultSet.getString("Gender").charAt(0));
+            person.setDateBirth(resultSet.getDate("Date_birth"));
+            person.setDateDeath(resultSet.getDate("Date_death"));
+            person.setCountryBirth(CountryDaoImpl.parseResult(resultSet));
+            person.setRegionBirth(RegionDaoImpl.parseResult(resultSet));
+            person.setTownBirth(TownDaoImpl.parseResult(resultSet));
+        }catch (Exception throwables)
+        {
+            throwables.printStackTrace();
+        }
         return person;
     }
 

@@ -16,10 +16,14 @@ public class CountryDaoImpl implements CountryDao {
     public static Country parseResult(ResultSet resultSet) throws SQLException {
 
         Country country = new Country();
+        try {
         country.setId(resultSet.getInt("Id_country"));
         country.setName(resultSet.getString("Name_country"));
 //        country.setPeople(PersonDaoImpl.parseResult(resultSet));
-
+        }catch (Exception throwables)
+        {
+            throwables.printStackTrace();
+        }
         return country;
     }
 

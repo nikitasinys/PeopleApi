@@ -14,12 +14,16 @@ public class RegionDaoImpl implements RegionDao {
     public static Region parseResult(ResultSet resultSet) throws SQLException {
 
         Region region = new Region();
+        try {
         region.setId(resultSet.getInt("Id_region"));
         region.setIdCountry(resultSet.getInt("Id_country"));
         region.setName(resultSet.getString("Name_region"));
         region.setCountry(CountryDaoImpl.parseResult(resultSet));
         //        region.setPeople(PersonDaoImpl.parseResult(resultSet));
-
+        }catch (Exception throwables)
+        {
+            throwables.printStackTrace();
+        }
         return region;
     }
 
@@ -29,7 +33,8 @@ public class RegionDaoImpl implements RegionDao {
         ResultSet resultSet;
 
         try (Connection connection = ConnectionFactory.getConnection()) {
-            resultSet = connection.createStatement().executeQuery("select * from Region");
+            resultSet = connection.createStatement().executeQuery("select * from Region as r " +
+                    "inner join Country as c on r.Id_country = c.Id_country");
             while (resultSet.next()) {
                 list.add(parseResult(resultSet));
             }
@@ -58,7 +63,8 @@ public class RegionDaoImpl implements RegionDao {
         ResultSet resultSet;
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement pst = connection.prepareStatement(
-                    "select * from Region where Id_region=?");
+                    "select * from Region as r" +
+                            "inner join Country as c on r.Id_country = c.Id_country where Id_region=?");
             pst.setInt(1, id);
             resultSet = pst.executeQuery();
             if (resultSet.next()) {

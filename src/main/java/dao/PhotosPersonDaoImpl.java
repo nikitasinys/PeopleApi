@@ -13,20 +13,23 @@ import java.util.List;
 public class PhotosPersonDaoImpl implements PhotosPersonDao {
     public static PhotosPerson parseResult(ResultSet resultSet) throws SQLException {
         PhotosPerson photosPerson = new PhotosPerson();
-
-        photosPerson.setHashPhoto(resultSet.getInt("Hash_photo"));
-        photosPerson.setIdPerson(resultSet.getInt("Id_person"));
-        photosPerson.setPathToPhoto(resultSet.getString("Path_to_photo"));
-        photosPerson.setDatePhoto(resultSet.getDate("Date_photo"));
-        photosPerson.setPerson(PersonDaoImpl.parseResult(resultSet));
-
+        try {
+            photosPerson.setHashPhoto(resultSet.getInt("Hash_photo"));
+            photosPerson.setIdPerson(resultSet.getInt("Id_person"));
+            photosPerson.setPathToPhoto(resultSet.getString("Path_to_photo"));
+            photosPerson.setDatePhoto(resultSet.getDate("Date_photo"));
+            photosPerson.setPerson(PersonDaoImpl.parseResult(resultSet));
+        }catch (Exception throwables)
+        {
+            throwables.printStackTrace();
+        }
         return photosPerson;
     }
 
     @Override
     public int getRecordsCount() {
         try (Connection connection = ConnectionFactory.getConnection()) {
-            ResultSet resultSet = connection.createStatement().executeQuery("select count(*) as count from PhotosPerson");
+            ResultSet resultSet = connection.createStatement().executeQuery("select count(*) as count from Photos_Person");
             int count = 0;
             if (resultSet.next())
                 count = resultSet.getInt("count");
@@ -44,7 +47,7 @@ public class PhotosPersonDaoImpl implements PhotosPersonDao {
 
         try (Connection connection = ConnectionFactory.getConnection()) {
             resultSet = connection.createStatement().executeQuery(
-                    "select * from PhotosPerson as ph " +
+                    "select * from Photos_Person as ph " +
                             "inner join Person as p on ph.Id_person = p.Id_person");
             while (resultSet.next()) {
                 list.add(parseResult(resultSet));
@@ -60,7 +63,7 @@ public class PhotosPersonDaoImpl implements PhotosPersonDao {
         ResultSet resultSet;
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement pst = connection.prepareStatement(
-                    "select * from PhotosPerson as ph " +
+                    "select * from Photos_Person as ph " +
                             "inner join Person as p on ph.Id_person = p.Id_person where Hash_photo=?");
             pst.setInt(1, id);
             resultSet = pst.executeQuery();
@@ -78,7 +81,7 @@ public class PhotosPersonDaoImpl implements PhotosPersonDao {
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement pst;
             pst = connection.prepareStatement(
-                    "insert into PhotosPerson(Hash_photo, Id_person, Path_to_photo, Date_photo) values (?,?,?,?)");
+                    "insert into Photos_Person(Hash_photo, Id_person, Path_to_photo, Date_photo) values (?,?,?,?)");
             pst.setInt(1, photosPerson.getHashPhoto());
             pst.setInt(2, photosPerson.getIdPerson());
             pst.setString(3, photosPerson.getPathToPhoto());
@@ -93,7 +96,7 @@ public class PhotosPersonDaoImpl implements PhotosPersonDao {
     public void updatePhotosPerson(PhotosPerson photosPerson) {
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement pst;
-            pst = connection.prepareStatement("update PhotosPerson set " +
+            pst = connection.prepareStatement("update Photos_Person set " +
                     "Hash_photo = ?, Id_person = ?, Path_to_photo = ?, Date_photo = ? where Hash_photo = ?");
             pst.setInt(1, photosPerson.getHashPhoto());
             pst.setInt(2, photosPerson.getIdPerson());
@@ -110,7 +113,7 @@ public class PhotosPersonDaoImpl implements PhotosPersonDao {
     public void deletePhotosPerson(PhotosPerson photosPerson) {
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement pst;
-            pst = connection.prepareStatement("delete from PhotosPerson where Hash_photo = ?");
+            pst = connection.prepareStatement("delete from Photos_Person where Hash_photo = ?");
             pst.setInt(1, photosPerson.getHashPhoto());
             pst.executeUpdate();
         } catch (SQLException throwables) {

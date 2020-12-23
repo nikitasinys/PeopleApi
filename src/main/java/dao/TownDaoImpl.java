@@ -12,16 +12,20 @@ import java.util.List;
 
 public class TownDaoImpl implements TownDao {
     public static Town parseResult(ResultSet resultSet) throws SQLException {
-
         Town town = new Town();
-        town.setId(resultSet.getInt("Id_town"));
-        town.setIdRegion(resultSet.getInt("Id_region"));
-        town.setName(resultSet.getString("Name_town"));
-        town.setRegion(RegionDaoImpl.parseResult(resultSet));
-        //        town.setPeople(PersonDaoImpl.parseResult(resultSet));
 
-        return town;
-    }
+        try {
+            town.setId(resultSet.getInt("Id_town"));
+            town.setIdRegion(resultSet.getInt("Id_region"));
+            town.setName(resultSet.getString("Name_town"));
+            town.setRegion(RegionDaoImpl.parseResult(resultSet));
+    //        town.setPeople(PersonDaoImpl.parseResult(resultSet));
+        }catch (Exception throwables)
+        {
+            throwables.printStackTrace();
+        }
+            return town;
+        }
 
     @Override
     public List<Town> getAllTown() {
@@ -29,7 +33,8 @@ public class TownDaoImpl implements TownDao {
         ResultSet resultSet;
 
         try (Connection connection = ConnectionFactory.getConnection()) {
-            resultSet = connection.createStatement().executeQuery("select * from Town");
+            resultSet = connection.createStatement().executeQuery("select * from Town as t " +
+                    "inner join Region as r on t.Id_region = r.Id_region");
             while (resultSet.next()) {
                 list.add(parseResult(resultSet));
             }
@@ -58,7 +63,8 @@ public class TownDaoImpl implements TownDao {
         ResultSet resultSet;
         try (Connection connection = ConnectionFactory.getConnection()) {
             PreparedStatement pst = connection.prepareStatement(
-                    "select * from Town where Id_town=?");
+                    "select * from Town as t " +
+                            "inner join Region as r on t.Id_region = r.Id_region where Id_town=?");
             pst.setInt(1, id);
             resultSet = pst.executeQuery();
             if (resultSet.next()) {
