@@ -3,12 +3,14 @@ package filters;
 import dao.UserDao;
 import dao.UserDaoImpl;
 import model.Role;
+import org.apache.log4j.Level;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 
 public class AuthFilter implements Filter {
     @Override
@@ -21,28 +23,45 @@ public class AuthFilter implements Filter {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
         final HttpServletResponse res = (HttpServletResponse) servletResponse;
 
-        final String login = req.getParameter("login");
-        final String password = req.getParameter("pwd");
+        System.out.println("" + new Date() + "In auth filter ");
 
-        final HttpSession session = req.getSession();
-        Role role;
-        UserDao userDao = new UserDaoImpl();
+        if(req.getMethod().equalsIgnoreCase("GET")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        }
+        else
+        {
+            final String login = req.getParameter("login");
+            final String password = req.getParameter("pwd");
 
-        if (session != null &&
-                session.getAttribute("login") != null &&
-                session.getAttribute("password") != null) {
+            final HttpSession session = req.getSession();
+            Role role;
+            UserDao userDao = new UserDaoImpl();
 
-            role = (Role) session.getAttribute("role");
+            if (session != null &&
+                    session.getAttribute("login") != null &&
+                    session.getAttribute("password") != null) {
 
-        } else if (userDao.isExist(login, password)) {
+                role = (Role) session.getAttribute("role");
 
-            role = userDao.getRoleByLoginPassword(login, password);
+            } else if (userDao.isExist(login, password)) {
 
-            req.getSession().setAttribute("password", password);
-            req.getSession().setAttribute("login", login);
-            req.getSession().setAttribute("role", role);
-        } else {
-            role = Role.DEFAULT;
+                role = userDao.getRoleByLoginPassword(login, password);
+
+                req.getSession().setAttribute("password", password);
+                req.getSession().setAttribute("login", login);
+                req.getSession().setAttribute("role", role);
+            } else {
+                role = Role.DEFAULT;
+            }
+            if (role == Role.ADMIN)
+            {
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
+            else
+            {
+                res.sendError(HttpServletResponse.SC_NOT_FOUND);
+//                res.sendRedirect("");
+            }
         }
 //        moveToPage(req, res, role);
     }

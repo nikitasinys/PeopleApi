@@ -50,12 +50,12 @@
             <version>8.2.2.jre8</version>
 <!--            mssql-jdbc-8.2.2.jre8.jar-->
         </dependency>
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc_auth</artifactId>
-            <version>8.2.2.x64</version>
-<!--            mssql-jdbc-8.2.2.jre8.jar-->
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.microsoft.sqlserver</groupId>-->
+<!--            <artifactId>mssql-jdbc_auth</artifactId>-->
+<!--            <version>8.2.2.x64</version>-->
+<!--&lt;!&ndash;            mssql-jdbc-8.2.2.jre8.jar&ndash;&gt;-->
+<!--        </dependency>-->
 
 <!--        <dependency>-->
 <!--            <groupId>com.itextpdf</groupId>-->

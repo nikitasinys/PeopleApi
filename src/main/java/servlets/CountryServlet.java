@@ -16,39 +16,39 @@ public class CountryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//        String json = req.getParameter("json");
-//        System.out.println(json);
-//        System.out.println(json);
         try {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        StringBuilder sb = new StringBuilder();
-        BufferedReader reader = req.getReader();
-        try {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
-            }
-        } finally {
-            reader.close();
+//            StringBuilder sb = new StringBuilder();
+//            BufferedReader reader = req.getReader();
+//            try {
+//                String line;
+//                while ((line = reader.readLine()) != null) {
+//                    sb.append(line).append('\n');
+//                }
+//            } finally {
+//                reader.close();
+//            }
+//            System.out.println(sb.toString());
+//            Country country = objectMapper.readValue(sb.toString(), Country.class);
+            String json = req.getParameter("json");
+            ObjectMapper objectMapper = new ObjectMapper();
+            System.out.println(json);
+            Country country = objectMapper.readValue(json, Country.class);
+        if (req.getParameter("actionT").equals("put"))
+        {
+            new CountryDaoImpl().putCountry(country);
+        }else if(req.getParameter("actionT").equals("update"))
+        {
+            new CountryDaoImpl().updateCountry(country);
         }
-        System.out.println(sb.toString());
-        Country country = objectMapper.readValue(sb.toString(), Country.class);
-        new CountryDaoImpl().putCountry(country);
 
-    } catch(Exception e) {
-        e.printStackTrace();
-    }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 //            int id = Integer.parseInt(req.getParameter("id"));
 //            String name = req.getParameter("name");
 //            List<Region> regions = null;
 //            List<Person> people = null;
 //        Country country = new Country(id, name, regions, people);
-//        if (req.getParameter("PostType").equals("put")) {
-//        }else if(req.getParameter("PostType").equals("update"))
-//        {
-//            new CountryDaoImpl().updateCountry(country);
-//        }
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,20 +60,22 @@ public class CountryServlet extends HttpServlet {
         String sid = req.getParameter("id");
         try {
             if(sid != null)
-            json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(countryDao.getCountryById(Integer.parseInt(sid)));
+                json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(countryDao.getCountryById(Integer.parseInt(sid)));
             else
-            json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(countryDao.getAllCountry());
+                json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(countryDao.getAllCountry());
             System.out.println(json);
 //            Country country2 = new Country();
 
         } catch(Exception e) {
             e.printStackTrace();
         }
-//curl -v -H "Content-Type: application/json" -X POST -d '{"id":"3","name":"UK","regions":null,"people":null}' http://localhost:8079/PeopleApi_war/country
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         out.print(json);
         out.flush();
+//curl -X POST -d "json={\"id\":\"3\",\"name\":\"UK\",\"regions\":null,\"people\":null}&login=admin&pwd=admin&actionT=put" http://localhost:8079/PeopleApi_war/country
+//curl -v -H "Content-Type: application/json" -X POST -d '{"id":"3","name":"UK","regions":null,"people":null}' http://localhost:8079/PeopleApi_war/country
+//curl -X POST http://localhost:8079/PeopleApi_war/country -H "Content-Type: application/json" -d '{"id":"3","name":"UK","regions":null,"people":null}'
     }
 }

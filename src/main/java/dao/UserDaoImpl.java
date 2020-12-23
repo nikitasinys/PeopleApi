@@ -15,6 +15,8 @@ public class UserDaoImpl implements UserDao {
 
 //        String ad = HashChecker.getHash("admin").toString();
 //        String us = HashChecker.getHash("user").toString();
+        if(login == null || password == null)
+            return false;
         try ( Connection connection = ConnectionFactory.getConnection()){
               PreparedStatement preparedStatement = connection
                 .prepareStatement(
@@ -37,6 +39,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Role getRoleByLoginPassword(String login, String password) {
+        if(login == null || password == null)
+            return (Role) null;
         Connection connection = ConnectionFactory.getConnection();
         try (PreparedStatement preparedStatement = connection
                 .prepareStatement(

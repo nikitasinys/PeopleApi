@@ -26,6 +26,8 @@ public class PersonDaoImpl implements PersonDao {
         person.setDateBirth(resultSet.getDate("Date_birth"));
         person.setDateDeath(resultSet.getDate("Date_death"));
         person.setCountryBirth(CountryDaoImpl.parseResult(resultSet));
+        person.setRegionBirth(RegionDaoImpl.parseResult(resultSet));
+        person.setTownBirth(TownDaoImpl.parseResult(resultSet));
 
         return person;
     }

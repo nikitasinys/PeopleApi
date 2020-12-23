@@ -31,42 +31,14 @@
         <filter-name>AuthFilter</filter-name>
         <filter-class>filters.AuthFilter</filter-class>
     </filter>
+    <!--    <filter-mapping>-->
+    <!--        <filter-name>AuthFilter</filter-name>-->
+    <!--        <url-pattern>/courses</url-pattern>-->
+    <!--    </filter-mapping>-->
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
-        <url-pattern>/courses</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/pages/*</url-pattern>
-    </filter-mapping>
-
-    <servlet>
-        <servlet-name>LoginPage</servlet-name>
-        <jsp-file>/pages/login.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginPage</servlet-name>
-        <url-pattern>/courses</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>UpdatePage</servlet-name>
-        <jsp-file>/pages/update.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdatePage</servlet-name>
-        <url-pattern>/update</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>DeletePage</servlet-name>
-        <jsp-file>/pages/delete.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DeletePage</servlet-name>
-        <url-pattern>/delete</url-pattern>
-    </servlet-mapping>
-
 
     <servlet>
         <servlet-name>CountryServlet</servlet-name>
@@ -77,10 +49,75 @@
         <url-pattern>/country</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PersonServlet</servlet-name>
+        <servlet-class>servlets.PersonServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PersonServlet</servlet-name>
+        <url-pattern>/person</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>PhotosPersonServlet</servlet-name>
+        <servlet-class>servlets.PhotosPersonServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PhotosPersonServlet</servlet-name>
+        <url-pattern>/photosPerson</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegionServlet</servlet-name>
+        <servlet-class>servlets.RegionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegionServlet</servlet-name>
+        <url-pattern>/region</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TownServlet</servlet-name>
+        <servlet-class>servlets.TownServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TownServlet</servlet-name>
+        <url-pattern>/town</url-pattern>
+    </servlet-mapping>
 
     <error-page>
         <error-code>404</error-code>
         <location>/pages/error404.jsp</location>
     </error-page>
+
+    <!--    </servlet-mapping>-->
+    <!--    <servlet>-->
+    <!--        <servlet-name>LoginPage</servlet-name>-->
+    <!--        <jsp-file>/pages/login.jsp</jsp-file>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>LoginPage</servlet-name>-->
+    <!--        <url-pattern>/courses</url-pattern>-->
+    <!--    </servlet-mapping>-->
+
+    <!--    <servlet>-->
+    <!--        <servlet-name>UpdatePage</servlet-name>-->
+    <!--        <jsp-file>/pages/update.jsp</jsp-file>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>UpdatePage</servlet-name>-->
+    <!--        <url-pattern>/update</url-pattern>-->
+    <!--    </servlet-mapping>-->
+
+    <!--    <servlet>-->
+    <!--        <servlet-name>DeletePage</servlet-name>-->
+    <!--        <jsp-file>/pages/delete.jsp</jsp-file>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>DeletePage</servlet-name>-->
+    <!--        <url-pattern>/delete</url-pattern>-->
+
+
 
 </web-app>
